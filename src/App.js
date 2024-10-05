@@ -31,13 +31,41 @@ const Header = styled.header`
   font-weight: bold;
 `;
 
+const DateShareContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
 const DateInput = styled.input`
-  display: block;
-  margin: 0 auto 20px auto;
   padding: 10px;
   font-size: 1.2rem;
   border-radius: 5px;
   border: 1px solid #ccc;
+  margin-right: 10px;
+`;
+
+const ShareButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  background: #ff5e57;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  &:hover {
+    background: #e04e4a;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  svg {
+    margin-right: 8px;
+  }
 `;
 
 const ChartContainer = styled.div`
@@ -47,6 +75,7 @@ const ChartContainer = styled.div`
 const NewsCount = styled.p`
   text-align: center;
   color: #ffffff;
+  margin-bottom: 20px;
 `;
 
 const NewsCard = styled.div`
@@ -55,13 +84,13 @@ const NewsCard = styled.div`
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
   align-items: center;
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   }
   @media (max-width: 768px) {
     padding: 10px;
@@ -186,14 +215,47 @@ function App() {
     }
   };
 
+  const handleShare = () => {
+    const shareText = `주식 뉴스 및 시세 웹앱에서 ${date}의 뉴스를 확인하세요!`;
+    if (navigator.share) {
+      navigator.share({
+        title: "주식 뉴스 및 시세 웹앱",
+        text: shareText,
+        url: window.location.href,
+      });
+    } else {
+      alert("공유하기가 지원되지 않는 브라우저입니다.");
+    }
+  };
+
   return (
     <Container>
       <Header>주식 뉴스 및 시세 웹앱</Header>
-      <DateInput
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
+      <DateShareContainer>
+        <DateInput
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+        <ShareButton onClick={handleShare}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            width="16"
+            height="16"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7M16 6l-4-4m0 0L8 6m4-4v16"
+            />
+          </svg>
+          공유하기
+        </ShareButton>
+      </DateShareContainer>
       <ChartContainer>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart
@@ -227,11 +289,6 @@ function App() {
           </LineChart>
         </ResponsiveContainer>
       </ChartContainer>
-
-      <NewsCount>
-        총 {(news.important?.length ?? 0) + (news.general?.length ?? 0)}개의
-        뉴스가 있습니다.
-      </NewsCount>
 
       <CategoryHeader>중요 뉴스</CategoryHeader>
       {news.important.length > 0 ? (
