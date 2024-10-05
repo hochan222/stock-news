@@ -17,5 +17,28 @@
       "description": "Technology stocks continued to lead gains as market sentiment improved.",
       "url": "https://example.com/tech-stocks"
     }
+  ],
+  "2024-10-05": [
+    {
+      "title": "\"힘 잃은 겐슬러\"…비트코인, 美 청문회 이후 8500만원 회복",
+      "description": "비트코인이 미국 하원 가상자산 관련 청문회 이후 8500만원대를 회복했다. 그간 가상자산 업계를 비난했던 게리 겐슬러 미국 증권거래위원회(SEC) 위원장이 질책을 받으면서 '위원장 교체'에 대한 기대 심리가 반영된 ",
+      "url": "https://n.news.naver.com/mnews/article/003/0012802058",
+      "image": "https://imgnews.pstatic.net/image/003/2024/09/25/NISI20230419_0001246108_web_20230419145214_20240925100911461.jpg?type=w800",
+      "author": null
+    },
+    {
+      "title": "갤럭시워치 울트라, 美 소비자전문지 평가 1위…전 부문 '최고' 등급",
+      "description": "삼성전자의 최신 스마트워치 '갤럭시 워치 울트라'가 미국 유력 소비자 전문지 '컨슈머 리포트'의 최신 평가에서 1위에 올랐다. 25일 업계에 따르면 갤럭시 워치 울트라는 컨슈머리포트 평가에서 총점 92점을 받으며 9",
+      "url": "https://n.news.naver.com/mnews/article/003/0012802060",
+      "image": "https://imgnews.pstatic.net/image/003/2024/09/25/NISI20240925_0001661103_web_20240925094837_20240925101319349.jpg?type=w800",
+      "author": null
+    },
+    {
+      "title": "中훈풍에 화장품주 강세…코스맥스 9%↑ 아모레 6%↑",
+      "description": "중국 경기부양 기대감에 25일 장 초반 국내 증시에서 화장품 관련주가 강세를 나타내고 있다. 이날 오전 9시45분 현재 코스맥스는 전 거래일보다 9.44% 오른 13만4500원에 거래되고 있다. 아모레퍼시픽은 전 거",
+      "url": "https://n.news.naver.com/mnews/article/003/0012802063",
+      "image": "https://imgnews.pstatic.net/image/003/2024/09/25/NISI20230920_0001369702_web_20230920141255_20240925095414428.jpg?type=w800",
+      "author": null
+    }
   ]
 }
