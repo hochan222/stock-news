@@ -1,60 +1,75 @@
-// index.js
+// index.js 코드 수정
 const axios = require("axios");
 const { JSDOM } = require("jsdom");
 const fs = require("fs");
 const path = require("path");
 
-async function parseNaverNews() {
+async function parseNews() {
   // Read URLs from input.json
   const inputData = JSON.parse(fs.readFileSync("input.json", "utf-8"));
-  const urls = inputData.urls;
+  const importantUrls = inputData.important_urls || [];
+  const generalUrls = inputData.general_urls || [];
 
-  if (!Array.isArray(urls) || urls.length === 0) {
+  if (
+    (!Array.isArray(importantUrls) || importantUrls.length === 0) &&
+    (!Array.isArray(generalUrls) || generalUrls.length === 0)
+  ) {
     throw new Error("URL array parameter is required");
   }
 
   const results = {};
   const date = new Date().toISOString().split("T")[0];
-  results[date] = [];
+  results[date] = {
+    important: [],
+    general: [],
+  };
 
-  for (const url of urls) {
-    try {
-      const response = await axios.get(url);
-      if (response.status !== 200) {
-        throw new Error("Failed to fetch the webpage");
+  // Helper function to parse a list of URLs
+  async function parseUrls(urls, category) {
+    for (const url of urls) {
+      try {
+        const response = await axios.get(url);
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch the webpage");
+        }
+
+        const dom = new JSDOM(response.data);
+        const document = dom.window.document;
+
+        const title = document
+          .querySelector('meta[property="og:title"]')
+          ?.getAttribute("content");
+        const description = document
+          .querySelector('meta[property="og:description"]')
+          ?.getAttribute("content");
+        const image = document
+          .querySelector('meta[property="og:image"]')
+          ?.getAttribute("content");
+        const author = document
+          .querySelector('meta[property="og:article:author"]')
+          ?.getAttribute("content");
+
+        if (!title || !description) {
+          throw new Error("Failed to extract title or description");
+        }
+
+        results[date][category].push({
+          title: title,
+          description: description,
+          url: url,
+          image: image || null,
+          author: author || null,
+        });
+      } catch (error) {
+        console.error("Error parsing URL:", url, "-", error.message);
       }
-
-      const dom = new JSDOM(response.data);
-      const document = dom.window.document;
-
-      const title = document
-        .querySelector('meta[property="og:title"]')
-        ?.getAttribute("content");
-      const description = document
-        .querySelector('meta[property="og:description"]')
-        ?.getAttribute("content");
-      const image = document
-        .querySelector('meta[property="og:image"]')
-        ?.getAttribute("content");
-      const author = document
-        .querySelector('meta[property="article:author"]')
-        ?.getAttribute("content");
-
-      if (!title || !description) {
-        throw new Error("Failed to extract title or description");
-      }
-
-      results[date].push({
-        title: title,
-        description: description,
-        url: url,
-        image: image || null,
-        author: author || null,
-      });
-    } catch (error) {
-      console.error("Error parsing URL:", url, "-", error.message);
     }
   }
+
+  // Parse important URLs
+  await parseUrls(importantUrls, "important");
+  // Parse general URLs
+  await parseUrls(generalUrls, "general");
 
   // Define the path for the output JSON file
   const outputPath = path.join(__dirname, "../public/newsData.json");
@@ -65,10 +80,25 @@ async function parseNaverNews() {
     existingData = JSON.parse(fs.readFileSync(outputPath, "utf-8"));
   }
 
-  // Merge existing data with new results
+  // Merge existing data with new results, avoiding duplicate titles
   for (const [key, value] of Object.entries(results)) {
     if (existingData[key]) {
-      existingData[key] = existingData[key].concat(value);
+      existingData[key].important = existingData[key].important.concat(
+        value.important.filter(
+          (newItem) =>
+            !existingData[key].important.some(
+              (existingItem) => existingItem.title === newItem.title
+            )
+        )
+      );
+      existingData[key].general = existingData[key].general.concat(
+        value.general.filter(
+          (newItem) =>
+            !existingData[key].general.some(
+              (existingItem) => existingItem.title === newItem.title
+            )
+        )
+      );
     } else {
       existingData[key] = value;
     }
@@ -80,4 +110,4 @@ async function parseNaverNews() {
 }
 
 // Example usage:
-parseNaverNews();
+parseNews();

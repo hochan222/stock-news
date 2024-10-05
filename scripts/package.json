@@ -4,12 +4,14 @@
   "description": "A Node.js script to parse Naver News article data.",
   "main": "parse.js",
   "scripts": {
-    "start": "node parse.js"
+    "start": "node parse.js",
+    "chart": "node getChart.js"
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "fs": "^0.0.1-security",
     "jsdom": "^22.1.0",
-    "fs": "^0.0.1-security"
+    "yahoo-finance2": "^2.13.2"
   },
   "author": "",
   "license": "ISC"

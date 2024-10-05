@@ -47,7 +47,6 @@ const ChartContainer = styled.div`
 const NewsCount = styled.p`
   text-align: center;
   color: #ffffff;
-  margin-bottom: 20px;
 `;
 
 const NewsCard = styled.div`
@@ -95,8 +94,15 @@ const NewsLink = styled.a`
   }
 `;
 
+const CategoryHeader = styled.h3`
+  font-size: 2rem;
+  color: #fff;
+  margin-top: 40px;
+  text-align: center;
+`;
+
 function App() {
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState({ important: [], general: [] });
   const [date, setDate] = useState("2024-10-01"); // 기본 날짜 설정 (임시로 설정)
   const [chartData, setChartData] = useState([]);
   const PUBLIC_URL = "/stock-news/build";
@@ -109,7 +115,7 @@ function App() {
         if (data[date]) {
           setNews(data[date]);
         } else {
-          setNews([]);
+          setNews({ important: [], general: [] });
         }
       } catch (error) {
         console.error("Error fetching news", error);
@@ -179,10 +185,14 @@ function App() {
         </ResponsiveContainer>
       </ChartContainer>
 
-      <NewsCount>총 {news.length}개의 뉴스가 있습니다.</NewsCount>
+      <NewsCount>
+        총 {(news.important?.length ?? 0) + (news.general?.length ?? 0)}개의
+        뉴스가 있습니다.
+      </NewsCount>
 
-      {news.length > 0 ? (
-        news.map((article, index) => (
+      <CategoryHeader>중요 뉴스</CategoryHeader>
+      {news.important.length > 0 ? (
+        news.important.map((article, index) => (
           <NewsCard key={index}>
             <NewsTitle>{article.title}</NewsTitle>
             <NewsContent>{article.description}</NewsContent>
@@ -196,7 +206,26 @@ function App() {
           </NewsCard>
         ))
       ) : (
-        <p>해당 날짜에 대한 뉴스가 없습니다.</p>
+        <p>해당 날짜에 대한 중요한 뉴스가 없습니다.</p>
+      )}
+
+      <CategoryHeader>일반 뉴스</CategoryHeader>
+      {news.general.length > 0 ? (
+        news.general.map((article, index) => (
+          <NewsCard key={index}>
+            <NewsTitle>{article.title}</NewsTitle>
+            <NewsContent>{article.description}</NewsContent>
+            <NewsLink
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              자세히 보기
+            </NewsLink>
+          </NewsCard>
+        ))
+      ) : (
+        <p>해당 날짜에 대한 일반 뉴스가 없습니다.</p>
       )}
     </Container>
   );
