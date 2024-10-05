@@ -34,6 +34,14 @@ jobs:
         run: yarn start
         working-directory: ./scripts
 
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ./
+
+      - name: buid stock-news
+        run: yarn build
+        working-directory: ./
+
       - name: Commit and push changes
         run: |
           git config --local user.name "github-actions[bot]"
