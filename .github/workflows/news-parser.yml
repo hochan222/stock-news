@@ -10,6 +10,9 @@ on:
     paths:
       - "scripts/input.json"
 
+permissions:
+  contents: write
+
 jobs:
   run-parser:
     runs-on: ubuntu-latest
