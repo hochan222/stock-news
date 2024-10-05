@@ -377,7 +377,7 @@ function App() {
           </NewsCard>
         ))
       ) : (
-        <StyledNoNews>해당 날짜에 대한 일반 뉴스가 없습니다.</StyledNoNews>
+        <StyledNoNews>해당 날짜에 대한 중요 뉴스가 없습니다.</StyledNoNews>
       )}
 
       <CategoryHeader>일반 뉴스</CategoryHeader>
