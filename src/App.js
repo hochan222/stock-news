@@ -177,6 +177,12 @@ function App() {
   const [news, setNews] = useState({ important: [], general: [] });
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [chartData, setChartData] = useState([]);
+  const [lineVisibility, setLineVisibility] = useState({
+    nasdaq: true,
+    kospi: true,
+    bitcoin: true,
+    usd_krw: true,
+  });
   const PUBLIC_URL = "/stock-news/build";
 
   useEffect(() => {
@@ -242,6 +248,14 @@ function App() {
     }
   };
 
+  const toggleLine = (e) => {
+    const { dataKey } = e;
+    setLineVisibility((prev) => ({
+      ...prev,
+      [dataKey]: !prev[dataKey],
+    }));
+  };
+
   return (
     <Container>
       <Header>주식 뉴스 및 시세 웹앱</Header>
@@ -281,24 +295,34 @@ function App() {
             <XAxis dataKey="date" stroke="#ffffff" />
             <YAxis stroke="#ffffff" />
             <Tooltip />
-            <Legend />
+            <Legend onClick={toggleLine} />
             <Line
               type="monotone"
               dataKey="nasdaq"
               stroke="#8884d8"
               name="나스닥"
+              hide={!lineVisibility.nasdaq}
             />
             <Line
               type="monotone"
               dataKey="kospi"
               stroke="#82ca9d"
               name="코스피"
+              hide={!lineVisibility.kospi}
             />
             <Line
               type="monotone"
               dataKey="bitcoin"
               stroke="#ffc658"
               name="비트코인"
+              hide={!lineVisibility.bitcoin}
+            />
+            <Line
+              type="monotone"
+              dataKey="usd_krw"
+              stroke="#ff7300"
+              name="환율"
+              hide={!lineVisibility.usd_krw}
             />
           </LineChart>
         </ResponsiveContainer>
