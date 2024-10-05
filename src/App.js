@@ -50,38 +50,81 @@ const NewsCount = styled.p`
 `;
 
 const NewsCard = styled.div`
-  background: #fff;
-  border: none;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  align-items: center;
   &:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
   @media (max-width: 768px) {
-    padding: 15px;
+    padding: 10px;
+    flex-direction: column;
   }
 `;
 
-const NewsTitle = styled.h2`
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 10px;
+const NewsImage = styled.img`
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 15px;
+  flex-shrink: 0;
   @media (max-width: 768px) {
-    font-size: 1.5rem;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+`;
+
+const NewsDetails = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const NewsTitle = styled.h2`
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: bold;
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
   }
 `;
 
 const NewsContent = styled.p`
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #555;
-  margin-bottom: 15px;
-  line-height: 1.6;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media (max-width: 768px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
+`;
+
+const NewsFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+`;
+
+const NewsAuthor = styled.p`
+  font-size: 0.9rem;
+  color: #777;
+  font-style: italic;
+  margin-left: auto;
 `;
 
 const NewsLink = styled.a`
@@ -194,15 +237,25 @@ function App() {
       {news.important.length > 0 ? (
         news.important.map((article, index) => (
           <NewsCard key={index}>
-            <NewsTitle>{article.title}</NewsTitle>
-            <NewsContent>{article.description}</NewsContent>
-            <NewsLink
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              자세히 보기
-            </NewsLink>
+            {article.image && (
+              <NewsImage src={article.image} alt={article.title} />
+            )}
+            <NewsDetails>
+              <NewsTitle>{article.title}</NewsTitle>
+              <NewsContent>{article.description}</NewsContent>
+              <NewsFooter>
+                <NewsLink
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  자세히 보기
+                </NewsLink>
+                <NewsAuthor>
+                  {article.author ? `By ${article.author}` : "Author unknown"}
+                </NewsAuthor>
+              </NewsFooter>
+            </NewsDetails>
           </NewsCard>
         ))
       ) : (
@@ -213,15 +266,25 @@ function App() {
       {news.general.length > 0 ? (
         news.general.map((article, index) => (
           <NewsCard key={index}>
-            <NewsTitle>{article.title}</NewsTitle>
-            <NewsContent>{article.description}</NewsContent>
-            <NewsLink
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              자세히 보기
-            </NewsLink>
+            {article.image && (
+              <NewsImage src={article.image} alt={article.title} />
+            )}
+            <NewsDetails>
+              <NewsTitle>{article.title}</NewsTitle>
+              <NewsContent>{article.description}</NewsContent>
+              <NewsFooter>
+                <NewsLink
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  자세히 보기
+                </NewsLink>
+                <NewsAuthor>
+                  {article.author ? `By ${article.author}` : "Author unknown"}
+                </NewsAuthor>
+              </NewsFooter>
+            </NewsDetails>
           </NewsCard>
         ))
       ) : (
