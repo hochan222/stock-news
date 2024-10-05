@@ -99,11 +99,12 @@ function App() {
   const [news, setNews] = useState([]);
   const [date, setDate] = useState("2024-10-01"); // 기본 날짜 설정 (임시로 설정)
   const [chartData, setChartData] = useState([]);
+  const PUBLIC_URL = "/stock-news/build";
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch("/newsData.json");
+        const response = await fetch(`${PUBLIC_URL}/newsData.json`);
         const data = await response.json();
         if (data[date]) {
           setNews(data[date]);
@@ -120,7 +121,7 @@ function App() {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await fetch("/chartData.json");
+        const response = await fetch(`${PUBLIC_URL}/chartData.json`);
         const data = await response.json();
         setChartData(data);
       } catch (error) {
