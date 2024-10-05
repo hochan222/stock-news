@@ -173,6 +173,11 @@ const CategoryHeader = styled.h3`
   text-align: center;
 `;
 
+const StyledNoNews = styled.p`
+  color: #ffffff;
+  text-align: center;
+`;
+
 const Footer = styled.footer`
   color: #fff;
   padding: 20px;
@@ -372,7 +377,7 @@ function App() {
           </NewsCard>
         ))
       ) : (
-        <p>해당 날짜에 대한 중요한 뉴스가 없습니다.</p>
+        <StyledNoNews>해당 날짜에 대한 일반 뉴스가 없습니다.</StyledNoNews>
       )}
 
       <CategoryHeader>일반 뉴스</CategoryHeader>
@@ -401,7 +406,7 @@ function App() {
           </NewsCard>
         ))
       ) : (
-        <p>해당 날짜에 대한 일반 뉴스가 없습니다.</p>
+        <StyledNoNews>해당 날짜에 대한 일반 뉴스가 없습니다.</StyledNoNews>
       )}
       <Footer>
         &copy; 2024 stock-news APP. All rights reserved. <br />
