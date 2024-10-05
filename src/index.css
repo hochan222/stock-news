@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 기본 반응형 스타일 */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}

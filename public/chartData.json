@@ -1,0 +1,7 @@
+[
+  { "date": "2024-10-01", "nasdaq": 15000, "kospi": 3100, "bitcoin": 50000 },
+  { "date": "2024-10-02", "nasdaq": 15100, "kospi": 3150, "bitcoin": 51000 },
+  { "date": "2024-10-03", "nasdaq": 15200, "kospi": 3200, "bitcoin": 52000 },
+  { "date": "2024-10-04", "nasdaq": 15150, "kospi": 3175, "bitcoin": 51500 },
+  { "date": "2024-10-05", "nasdaq": 15300, "kospi": 3220, "bitcoin": 53000 }
+]
