@@ -225,7 +225,11 @@ function App() {
 
   const handleShare = () => {
     const shareText = `주식 뉴스 및 시세 웹앱에서 ${date}의 뉴스를 확인하세요!`;
-    const shareUrl = `${window.location.href}?date=${date}`;
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    params.set("date", date);
+
+    const shareUrl = `${url.origin}${url.pathname}?${params.toString()}`;
 
     if (navigator.share) {
       navigator.share({
