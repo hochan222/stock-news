@@ -175,9 +175,17 @@ const CategoryHeader = styled.h3`
 
 function App() {
   const [news, setNews] = useState({ important: [], general: [] });
-  const [date, setDate] = useState("2024-10-01"); // 기본 날짜 설정 (임시로 설정)
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [chartData, setChartData] = useState([]);
   const PUBLIC_URL = "/stock-news/build";
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedDate = urlParams.get("date");
+    if (sharedDate) {
+      setDate(sharedDate);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -217,11 +225,13 @@ function App() {
 
   const handleShare = () => {
     const shareText = `주식 뉴스 및 시세 웹앱에서 ${date}의 뉴스를 확인하세요!`;
+    const shareUrl = `${window.location.href}?date=${date}`;
+
     if (navigator.share) {
       navigator.share({
         title: "주식 뉴스 및 시세 웹앱",
         text: shareText,
-        url: window.location.href,
+        url: shareUrl,
       });
     } else {
       alert("공유하기가 지원되지 않는 브라우저입니다.");
