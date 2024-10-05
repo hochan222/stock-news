@@ -173,6 +173,24 @@ const CategoryHeader = styled.h3`
   text-align: center;
 `;
 
+const Footer = styled.footer`
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 0 0 15px 15px;
+  margin-top: 40px;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  a {
+    color: #ff7300;
+    text-decoration: none;
+    font-weight: bold;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
 function App() {
   const [news, setNews] = useState({ important: [], general: [] });
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
@@ -385,6 +403,17 @@ function App() {
       ) : (
         <p>해당 날짜에 대한 일반 뉴스가 없습니다.</p>
       )}
+      <Footer>
+        &copy; 2024 stock-news APP. All rights reserved. <br />
+        Developed by{" "}
+        <a
+          href="https://github.com/hochan222"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          hochan222
+        </a>
+      </Footer>
     </Container>
   );
 }
