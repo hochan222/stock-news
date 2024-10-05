@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "homepage": "/build",
+  "homepage": "/stock-news/build",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
