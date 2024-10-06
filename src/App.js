@@ -173,9 +173,28 @@ const CategoryHeader = styled.h3`
   text-align: center;
 `;
 
-const StyledNoNews = styled.p`
+const StyledNoNews = styled.div`
   color: #ffffff;
   text-align: center;
+`;
+
+const RecommendationButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+`;
+
+const RecommendationButton = styled.button`
+  padding: 10px 16px;
+  font-size: 1rem;
+  background: transparent;
+  color: #fff;
+  border: 1px solid white;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 `;
 
 const Footer = styled.footer`
@@ -406,7 +425,28 @@ function App() {
           </NewsCard>
         ))
       ) : (
-        <StyledNoNews>해당 날짜에 대한 일반 뉴스가 없습니다.</StyledNoNews>
+        <StyledNoNews>
+          해당 날짜에 대한 일반 뉴스가 없습니다.
+          <RecommendationButtonContainer>
+            <RecommendationButton
+              onClick={() => {
+                window.open(
+                  "https://finance.naver.com/news/mainnews.naver",
+                  "_blank"
+                );
+              }}
+            >
+              금융 뉴스 보기
+            </RecommendationButton>
+            <RecommendationButton
+              onClick={() => {
+                window.open("https://news.naver.com/section/101", "_blank");
+              }}
+            >
+              경제 뉴스 보기
+            </RecommendationButton>
+          </RecommendationButtonContainer>
+        </StyledNoNews>
       )}
       <Footer>
         &copy; 2024 stock-news APP. All rights reserved. <br />
