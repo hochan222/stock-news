@@ -2,7 +2,7 @@ name: Run Chart Update
 
 on:
   schedule:
-    - cron: "0 07 * * *"
+    - cron: "0 22 * * *"
 
 permissions:
   contents: write
@@ -18,10 +18,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
 
       - name: Install dependencies
         run: yarn install
+        working-directory: ./scripts
 
       - name: Run chart update
         run: yarn chart
+        working-directory: ./scripts
