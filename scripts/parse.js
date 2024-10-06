@@ -18,8 +18,17 @@ async function parseNews() {
   }
 
   const results = {};
-  const date = new Date().toISOString().split("T")[0];
-  results[date] = {
+  // 현재 날짜 가져오기
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate());
+
+  // 한국 시간(UTC+9)으로 변환
+  const koreaOffset = 9 * 60 * 60000; // 9시간을 밀리초로 변환
+  const koreaTime = new Date(currentDate.getTime() + koreaOffset);
+
+  // 한국 날짜를 YYYY-MM-DD 형식으로 출력
+  const nextDate = koreaTime.toISOString().split("T")[0];
+  results[nextDate] = {
     important: [],
     general: [],
   };
@@ -53,7 +62,7 @@ async function parseNews() {
           throw new Error("Failed to extract title or description");
         }
 
-        results[date][category].push({
+        results[nextDate][category].push({
           title: title,
           description: description,
           url: url,

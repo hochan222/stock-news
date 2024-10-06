@@ -499,13 +499,6 @@
         "url": "https://n.news.naver.com/mnews/article/001/0014965945",
         "image": "https://imgnews.pstatic.net/image/001/2024/10/06/PCM20240315000197990_P4_20241006060014843.jpg?type=w800",
         "author": "연합뉴스 | 네이버"
-      },
-      {
-        "title": "베일 벗는 테슬라 로보택시…FOMC 의사록, CPI, 어닝시즌 개막[이번주 美 증시는]",
-        "description": "미국 증시는 지난주 이란의 이스라엘 공격과 미국 항만노조의 파업으로 불안한 10월 거래를 시작했다. 하지만 지난 4일 발표된 9월 고용지표가 예상을 훌쩍 뛰어넘는 호조로 나타나면서 미국 증시 3대 지수는 4주째 상승",
-        "url": "https://n.news.naver.com/mnews/article/008/0005097281",
-        "image": "https://imgnews.pstatic.net/image/008/2024/10/07/0005097281_001_20241007060511441.jpg?type=w800",
-        "author": "머니투데이 | 네이버"
       }
     ],
     "general": [
@@ -564,7 +557,20 @@
         "url": "https://n.news.naver.com/mnews/article/421/0007826316",
         "image": "https://imgnews.pstatic.net/image/421/2024/10/06/0007826316_001_20241006070105197.jpg?type=w800",
         "author": "뉴스1 | 네이버"
-      },
+      }
+    ]
+  },
+  "2024-10-07": {
+    "important": [
+      {
+        "title": "베일 벗는 테슬라 로보택시…FOMC 의사록, CPI, 어닝시즌 개막[이번주 美 증시는]",
+        "description": "미국 증시는 지난주 이란의 이스라엘 공격과 미국 항만노조의 파업으로 불안한 10월 거래를 시작했다. 하지만 지난 4일 발표된 9월 고용지표가 예상을 훌쩍 뛰어넘는 호조로 나타나면서 미국 증시 3대 지수는 4주째 상승",
+        "url": "https://n.news.naver.com/mnews/article/008/0005097281",
+        "image": "https://imgnews.pstatic.net/image/008/2024/10/07/0005097281_001_20241007060511441.jpg?type=w800",
+        "author": "머니투데이 | 네이버"
+      }
+    ],
+    "general": [
       {
         "title": "“살생부 나온다” 벌벌 떨고있는 이 은행들…고강도 구조조정 신호탄",
         "description": "금감원, 7개 저축은행 검사 마무리 다음달 중 금융위에 보고서 제출 연내 최대 5곳 적기시정조치 부과 강도높은 구조조정 요구할 듯 기준 만족못하면 퇴출 절차 밟을수도 금융당국이 올해 안으로 부실 저축은행을 골라내 강",
