@@ -59,7 +59,15 @@ async function updateChartData() {
   }
 
   // 현재 날짜 가져오기
-  const currentDate = new Date().toISOString().split("T")[0];
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate());
+
+  // 한국 시간(UTC+9)으로 변환
+  const koreaOffset = 9 * 60 * 60000; // 9시간을 밀리초로 변환
+  const koreaTime = new Date(currentDate.getTime() + koreaOffset);
+
+  // 한국 날짜를 YYYY-MM-DD 형식으로 출력
+  const nextDate = koreaTime.toISOString().split("T")[0];
 
   // 비트코인, 나스닥, 코스피, 달러 환율 데이터 가져오기
   const bitcoinPrice = await fetchBitcoinPrice();
@@ -79,16 +87,14 @@ async function updateChartData() {
 
   // 새로운 데이터 추가 또는 기존 데이터 덮어쓰기
   const newData = {
-    date: currentDate,
+    date: nextDate,
     nasdaq: nasdaqPrice,
     kospi: kospiPrice,
     bitcoin: bitcoinPrice,
     usd_krw: usdKrwRate,
   };
 
-  const existingIndex = chartData.findIndex(
-    (entry) => entry.date === currentDate
-  );
+  const existingIndex = chartData.findIndex((entry) => entry.date === nextDate);
   if (existingIndex !== -1) {
     chartData[existingIndex] = newData;
   } else {
