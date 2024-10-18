@@ -220,6 +220,7 @@ function App() {
   const newsCache = useRef({});
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [chartData, setChartData] = useState([]);
+  const [filteredChartData, setFilteredChartData] = useState([]);
   const [lineVisibility, setLineVisibility] = useState({
     nasdaq: true,
     kospi: true,
@@ -286,6 +287,22 @@ function App() {
     fetchChartData();
   }, []);
 
+  useEffect(() => {
+    const startDate = new Date(date);
+    const endDatePast = new Date(startDate);
+    endDatePast.setDate(startDate.getDate() - 13);
+
+    const endDateFuture = new Date(startDate);
+    endDateFuture.setDate(startDate.getDate() + 7);
+
+    const filteredData = chartData.filter((dataPoint) => {
+      const dataDate = new Date(dataPoint.date);
+      return dataDate <= endDateFuture && dataDate >= endDatePast;
+    });
+
+    setFilteredChartData(filteredData);
+  }, [chartData, date]);
+
   const handleDateSelect = (data) => {
     if (data && data.activeLabel) {
       setDate(data.activeLabel);
@@ -350,9 +367,10 @@ function App() {
       <ChartContainer>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart
-            data={chartData}
+            data={filteredChartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             onClick={handleDateSelect}
+            isAnimationActive={false}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" stroke="#ffffff" />
@@ -365,6 +383,7 @@ function App() {
               stroke="#8884d8"
               name="나스닥"
               hide={!lineVisibility.nasdaq}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -372,6 +391,7 @@ function App() {
               stroke="#82ca9d"
               name="코스피"
               hide={!lineVisibility.kospi}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -379,6 +399,7 @@ function App() {
               stroke="#ffc658"
               name="비트코인"
               hide={!lineVisibility.bitcoin}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -386,6 +407,7 @@ function App() {
               stroke="#ff7300"
               name="환율"
               hide={!lineVisibility.usd_krw}
+              isAnimationActive={false}
             />
           </LineChart>
         </ResponsiveContainer>
