@@ -1,11 +1,9 @@
-// index.js 코드 수정
 const axios = require("axios");
 const { JSDOM } = require("jsdom");
 const fs = require("fs");
 const path = require("path");
 
 async function parseNews() {
-  // Read URLs from input.json
   const inputData = JSON.parse(fs.readFileSync("input.json", "utf-8"));
   const importantUrls = inputData.important_urls || [];
   const generalUrls = inputData.general_urls || [];
@@ -16,6 +14,15 @@ async function parseNews() {
   ) {
     throw new Error("URL array parameter is required");
   }
+
+  // Helper function to get the start of the week (Monday) for a given date
+  const getStartOfWeek = (date) => {
+    const currentDate = new Date(date);
+    const day = currentDate.getDay();
+    const diff = currentDate.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
+    const monday = new Date(currentDate.setDate(diff));
+    return monday.toISOString().split("T")[0];
+  };
 
   const results = {};
   // 현재 날짜 가져오기
@@ -28,6 +35,9 @@ async function parseNews() {
 
   // 한국 날짜를 YYYY-MM-DD 형식으로 출력
   const nextDate = koreaTime.toISOString().split("T")[0];
+  const weekStartDate = getStartOfWeek(nextDate);
+  const year = new Date(weekStartDate).getFullYear();
+
   results[nextDate] = {
     important: [],
     general: [],
@@ -81,7 +91,11 @@ async function parseNews() {
   await parseUrls(generalUrls, "general");
 
   // Define the path for the output JSON file
-  const outputPath = path.join(__dirname, "../public/newsData.json");
+  const outputDir = path.join(__dirname, `../public/news/${year}`);
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+  const outputPath = path.join(outputDir, `${weekStartDate}.json`);
 
   // Check if the output file already exists
   let existingData = {};
@@ -113,9 +127,9 @@ async function parseNews() {
     }
   }
 
-  // Write the merged data to newsData.json
+  // Write the merged data to the output file
   fs.writeFileSync(outputPath, JSON.stringify(existingData, null, 2));
-  console.log("Data saved to ../public/newsData.json");
+  console.log(`Data saved to ${outputPath}`);
 }
 
 // Example usage:

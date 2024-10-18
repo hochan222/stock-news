@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import {
   LineChart,
@@ -217,6 +217,7 @@ const Footer = styled.footer`
 
 function App() {
   const [news, setNews] = useState({ important: [], general: [] });
+  const newsCache = useRef({});
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [chartData, setChartData] = useState([]);
   const [lineVisibility, setLineVisibility] = useState({
@@ -227,19 +228,38 @@ function App() {
   });
   const PUBLIC_URL = "/stock-news/build";
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const sharedDate = urlParams.get("date");
-    if (sharedDate) {
-      setDate(sharedDate);
-    }
-  }, []);
+  const getStartOfWeek = (date) => {
+    const currentDate = new Date(date);
+    const day = currentDate.getDay();
+    const diff = currentDate.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
+    const monday = new Date(currentDate.setDate(diff));
+    return monday.toISOString().split("T")[0];
+  };
+
+  const getWeekStartFromDate = (date) => {
+    return getStartOfWeek(date);
+  };
 
   useEffect(() => {
     const fetchNews = async () => {
+      const weekStartDate = getWeekStartFromDate(date);
+      if (newsCache.current[weekStartDate]) {
+        setNews(
+          newsCache.current[weekStartDate][date] || {
+            important: [],
+            general: [],
+          }
+        );
+        return;
+      }
       try {
-        const response = await fetch(`${PUBLIC_URL}/newsData.json`);
+        const weekStartDate = getStartOfWeek(date);
+        const year = new Date(weekStartDate).getFullYear();
+        const response = await fetch(
+          `${PUBLIC_URL}/news/${year}/${weekStartDate}.json`
+        );
         const data = await response.json();
+        newsCache.current[weekStartDate] = data;
         if (data[date]) {
           setNews(data[date]);
         } else {
@@ -247,6 +267,7 @@ function App() {
         }
       } catch (error) {
         console.error("Error fetching news", error);
+        setNews({ important: [], general: [] });
       }
     };
     fetchNews();
