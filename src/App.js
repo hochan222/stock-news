@@ -237,13 +237,9 @@ function App() {
     return monday.toISOString().split("T")[0];
   };
 
-  const getWeekStartFromDate = (date) => {
-    return getStartOfWeek(date);
-  };
-
   useEffect(() => {
     const fetchNews = async () => {
-      const weekStartDate = getWeekStartFromDate(date);
+      const weekStartDate = getStartOfWeek(date);
       if (newsCache.current[weekStartDate]) {
         setNews(
           newsCache.current[weekStartDate][date] || {
