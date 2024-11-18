@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/stock-news/build/static/css/main.bd415436.css",
-    "main.js": "/stock-news/build/static/js/main.aeafc959.js",
+    "main.js": "/stock-news/build/static/js/main.a5f754f1.js",
     "index.html": "/stock-news/build/index.html",
     "main.bd415436.css.map": "/stock-news/build/static/css/main.bd415436.css.map",
-    "main.aeafc959.js.map": "/stock-news/build/static/js/main.aeafc959.js.map"
+    "main.a5f754f1.js.map": "/stock-news/build/static/js/main.a5f754f1.js.map"
   },
   "entrypoints": [
     "static/css/main.bd415436.css",
-    "static/js/main.aeafc959.js"
+    "static/js/main.a5f754f1.js"
   ]
 }
